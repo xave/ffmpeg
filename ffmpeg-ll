@@ -5,6 +5,8 @@
 
 # VIDEO 1 Operations
 	# Trim: 8:00 to 11:00
+	# Sync/trim the audio for that section of film
+	#
 	# Display Frequency spectrum underneath
 	# Display Power Spectrum Underneath
 	# Display Something to the side of the video and the bottom will be colored green.
@@ -43,14 +45,29 @@
 
 
 
-# export $TEST=~/Downloads/mov/A\ Beautiful\ Mind\ (2001\) [1080p]//A.Beautiful.Mind.2001.1080p.BluRay.x264.GSFTX.mp4
-
-# TEST="~/Downloads/mov/A.Beautiful.Mind.2001.1080p/A.Beautiful.Mind.2001.1080p.BluRay.x264.GSFTX.mp4"
+## DECLARE VARS
 TEST="/Users/xavier/Downloads/mov/A.Beautiful.Mind.2001.1080p/A.Beautiful.Mind.2001.1080p.BluRay.x264.GSFTX.mp4"
+T1=480  # 00:08:00
+T2=660  # 00:11:00
+T3=1211 # 00:20:11
+T4=1306 # 00:21:46
+T5=1370 # 00:22:50
+T6=1437 # 00:23:27
 
 ffmpeg -i $TEST \
-	-ss 00:08:00 -t 00:03:00 \
 	-async 1 \
-	-c:v copy\
-	-c:a copy -b:a 192k -ac 2 \
+	-filter_complex \
+		"[0:v]trim=$T1:$T2, setpts=PTS-STARTSPTS[v0]; \
+		 [0:a]atrim=$T1:$T2, asetpts=PTS-STARTPTS[a0]; \
+		 [0:v]trim=$T2:$T3, setpts=PTS-STARTPTS[v1]; \
+		 [0:a]atrim=$T2:$T3, asetpts=PTS-STARTPTS[a1]; \
+		 [v0][a0][v1][a1]concat=n=2:v=1:a=1[out]" \
+	-b:a 192k -ac 2 \
+	-map "[out]" \
 	output.mp4
+
+
+
+
+
+
