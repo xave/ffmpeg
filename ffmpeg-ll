@@ -1,0 +1,40 @@
+#! bin/bash
+
+# This file will take a clip 
+
+
+# VIDEO 1 Operations
+	# Trim: 8:00 to 11:00
+	# Display Frequency spectrum underneath
+	# Display Power Spectrum Underneath
+	# Display Something to the side of the video and the bottom will be colored green.
+	# Histogram
+
+# VIDEO2 Operations
+	# Trim: 20:11 to 21:46
+	# OVERLAY to mirror Top half onto bottom half
+	# Overlay to Put bottom half on top half and top half on bottom half
+	# Blur the video
+	# ROTATE video in sinusoidal manner
+	# 
+	
+# VIDEO3 Operations
+	# Trim: 22:50 to 23:57
+	# Exponential Saturation Fade-Out with HUE
+	# Full Color
+	# Red Channel Only: COLORCHANNELMIXER
+	# Green Channel Only
+	# Blue Channel Only
+	# Full Color
+	# CROP but PAD with purple
+	# Lower Framerate to 10 fps:  FPS
+	# Chorus Delay on Audio
+	# Play with geq, hflip, 
+https://trac.ffmpeg.org/wiki/FancyFilteringExamples
+https://trac.ffmpeg.org/wiki/FilteringGuide
+
+# FINAL OPERATIONS
+	# Add subtitles to the entire video detailing which settings I have used at each effecrt change. SUBTITLES
+	# TODO: Make a .srt file.
+
+
