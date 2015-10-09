@@ -1,6 +1,6 @@
-#! bin/bash
+#! /bin/bash
 
-# This file will take a clip 
+# This file will take a clip from a movie and perform certain operations on it. 
 
 
 # VIDEO 1 Operations
@@ -30,11 +30,27 @@
 	# Lower Framerate to 10 fps:  FPS
 	# Chorus Delay on Audio
 	# Play with geq, hflip, 
-https://trac.ffmpeg.org/wiki/FancyFilteringExamples
-https://trac.ffmpeg.org/wiki/FilteringGuide
+# https://trac.ffmpeg.org/wiki/FancyFilteringExamples
+# https://trac.ffmpeg.org/wiki/FilteringGuide
 
 # FINAL OPERATIONS
 	# Add subtitles to the entire video detailing which settings I have used at each effecrt change. SUBTITLES
 	# TODO: Make a .srt file.
 
 
+
+
+
+
+
+# export $TEST=~/Downloads/mov/A\ Beautiful\ Mind\ (2001\) [1080p]//A.Beautiful.Mind.2001.1080p.BluRay.x264.GSFTX.mp4
+
+# TEST="~/Downloads/mov/A.Beautiful.Mind.2001.1080p/A.Beautiful.Mind.2001.1080p.BluRay.x264.GSFTX.mp4"
+TEST="/Users/xavier/Downloads/mov/A.Beautiful.Mind.2001.1080p/A.Beautiful.Mind.2001.1080p.BluRay.x264.GSFTX.mp4"
+
+ffmpeg -i $TEST \
+	-ss 00:08:00 -t 00:03:00 \
+	-async 1 \
+	-c:v copy\
+	-c:a copy -b:a 192k -ac 2 \
+	output.mp4
