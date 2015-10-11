@@ -63,7 +63,7 @@ ffmpeg -i $TEST \
 			scale=w=iw:h=0.5*ih[v0-1]; \
 		 [0:a]atrim=$T1:$T2, asetpts=PTS-STARTPTS[a0]; \
 		 [0:v]trim=$T3:$T4, setpts=PTS-STARTPTS[v1]; \
-	 	 [v1]hue=90:s=1[v1-hue]; \
+	 	 [v1]hue="H=2*PI*t:s=3"[v1-hue]; \
 		 [0:a]atrim=$T3:$T4, asetpts=PTS-STARTPTS[a1]; \
 		 [0:v]trim=$T5:$T6, setpts=PTS-STARTPTS[v2]; \
 		 [0:a]atrim=$T5:$T6, asetpts=PTS-STARTPTS[a2]; \
