@@ -63,11 +63,12 @@ ffmpeg -i $TEST \
 			scale=w=iw:h=0.5*ih[v0-1]; \
 		 [0:a]atrim=$T1:$T2, asetpts=PTS-STARTPTS[a0]; \
 		 [0:v]trim=$T3:$T4, setpts=PTS-STARTPTS[v1]; \
+	 	 [v1]hue=90:s=1[v1-hue]; \
 		 [0:a]atrim=$T3:$T4, asetpts=PTS-STARTPTS[a1]; \
 		 [0:v]trim=$T5:$T6, setpts=PTS-STARTPTS[v2]; \
 		 [0:a]atrim=$T5:$T6, asetpts=PTS-STARTPTS[a2]; \
 		 [v0][v0-1]overlay=x=main_w-overlay_w-10:y=main_h-overlay_h-10[v0-over]; \
-		 [v0-over][a0][v1][a1][v2][a2]concat=n=3:v=1:a=1[out]" \
+		 [v0-over][a0][v1-hue][a1][v2][a2]concat=n=3:v=1:a=1[out]" \
 	-b:a 192k \
 	-strict -2 \
 	-y \
