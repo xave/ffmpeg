@@ -2,18 +2,18 @@
 
 # This file will take a clip from a movie and perform certain operations on it. 
 # 
-# The file inputs a movie file and creates a translucent black bar. Then the scene is overlayed with a waveform representation of it audio on top of the black bar. These are done with the overlay command. The movie frame is rotated and a chorus delay is added. Then, the rotation is stopped and the saturation is increased slightly while the hue is repeatedly cycled through all of its possible values. Finally, the video is desaturated completely to greayscale.
+# The file inputs a movie file and creates a translucent black bar. Then the scene is overlayed with a waveform representation of it audio on top of the black bar. These are done with the overlay command. The movie frame is rotated and a chorus delay is added. Then, the rotation is stopped and the saturation is increased slightly while the hue is repeatedly cycled through all of its possible values. Finally, the video is desaturated completely to grayscale.
 
 
 
 ## DECLARE VARS
 TEST="/Users/xavier/Downloads/mov/A.Beautiful.Mind.2001.1080p/A.Beautiful.Mind.2001.1080p.BluRay.x264.GSFTX.mp4"
-T1=502  # 00:08:00 480 # Rooftop
-T2=510  # 00:11:00 660
-T3=520 # 00:20:11 1211
-T4=530 # 00:21:46 1306
-SCALE=1/1 # 2/3, 
-SF=1.0 # 1.5,
+T1=1263 # 00:21:03
+T2=1270  
+T3=1278 
+T4=1286 # 00:21:25 
+SCALE=1/1 # 2/3 for TEST
+SF=1.0 # 1.5 for TEST
 T=35 #  Period for video ROTATE
 
 # ERATTA: CHROMAKEY FILTER IN 37.10 of ffmpeg is actually COLORKEY.
@@ -43,7 +43,3 @@ ffmpeg -i $TEST \
 	-y \
 	-map "[out]" \
 	output.mkv
-
-
-
-
