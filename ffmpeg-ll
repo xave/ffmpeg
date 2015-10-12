@@ -1,59 +1,17 @@
 #! /bin/bash
 
 # This file will take a clip from a movie and perform certain operations on it. 
-
-
-# VIDEO 1 Operations
-	# Trim: 8:00 to 11:00
-	# Sync/trim the audio for that section of film
-	#
-	# Display Frequency spectrum underneath
-	# Display Power Spectrum Underneath
-	# Display Something to the side of the video and the bottom will be colored green.
-	# Histogram
-
-# VIDEO2 Operations
-	# Trim: 20:11 to 21:46
-	# OVERLAY to mirror Top half onto bottom half
-	# Overlay to Put bottom half on top half and top half on bottom half
-	# Blur the video
-	# ROTATE video in sinusoidal manner
-	# 
-	
-# VIDEO3 Operations
-	# Trim: 22:50 to 23:57
-	# Exponential Saturation Fade-Out with HUE
-	# Full Color
-	# Red Channel Only: COLORCHANNELMIXER
-	# Green Channel Only
-	# Blue Channel Only
-	# Full Color
-	# CROP but PAD with purple
-	# Change framerate.
-	# Chorus Delay on Audio
-	# Play with geq, hflip, 
-# https://trac.ffmpeg.org/wiki/FancyFilteringExamples
-# https://trac.ffmpeg.org/wiki/FilteringGuide
-
-# FINAL OPERATIONS
-	# Add subtitles to the entire video detailing which settings I have used at each effecrt change. SUBTITLES
-	# TODO: Make a .srt file.
-
-###########################################################################
-# EFFECTS AND THEIR TIMES
-
-
+# 
+# The file inputs a movie file and creates a translucent black bar. Then the scene is overlayed with a waveform representation of it audio on top of the black bar. These are done with the overlay command. The movie frame is rotated and a chorus delay is added. Then, the rotation is stopped and the saturation is increased slightly while the hue is repeatedly cycled through all of its possible values. Finally, the video is desaturated completely to greayscale.
 
 
 
 ## DECLARE VARS
 TEST="/Users/xavier/Downloads/mov/A.Beautiful.Mind.2001.1080p/A.Beautiful.Mind.2001.1080p.BluRay.x264.GSFTX.mp4"
-T1=480  # 00:08:00 480
-T2=660  # 00:11:00 660
-T3=121 # 00:20:11 1211
-T4=130 # 00:21:46 1306
-T5=137 # 00:22:50 1370
-T6=140 # 00:22:57 1407
+T1=502  # 00:08:00 480 # Rooftop
+T2=510  # 00:11:00 660
+T3=520 # 00:20:11 1211
+T4=530 # 00:21:46 1306
 SCALE=1/1 # 2/3, 
 SF=1.0 # 1.5,
 T=35 #  Period for video ROTATE
@@ -70,11 +28,11 @@ ffmpeg -i $TEST \
 			showfreqs=size="1920x1040":mode=line, \
 			scale=w=iw:h=0.5*ih[v0-a]; \
 		 [0:a]atrim=$T1:$T2, atempo=$SF, asetpts=(PTS-STARTPTS), chorus=0.5:0.9:50|60|40:0.4|0.32|0.3:0.25|0.4|0.3:2|2.3|1.3[a0]; \
-		 [0:v]trim=$T3:$T4, setpts=$SCALE*(PTS-STARTPTS), hue="H=2*PI*t:s=3"[v1]; \
-		 [0:a]atrim=$T3:$T4, atempo=$SF, asetpts=PTS-STARTPTS[a1]; \
-		 [0:v]trim=$T5:$T6, setpts=(PTS-STARTPTS), \
+		 [0:v]trim=$T2:$T3, setpts=$SCALE*(PTS-STARTPTS), hue="H=2*PI*t:s=3"[v1]; \
+		 [0:a]atrim=$T2:$T3, atempo=$SF, asetpts=PTS-STARTPTS[a1]; \
+		 [0:v]trim=$T3:$T4, setpts=(PTS-STARTPTS), \
 			colorchannelmixer=.3:.4:.3:0:.3:.4:.3:0:.3:.4:.3[v2]; \
-		 [0:a]atrim=$T5:$T6,  asetpts=(PTS-STARTPTS)[a2]; \
+		 [0:a]atrim=$T3:$T4,  asetpts=(PTS-STARTPTS)[a2]; \
 		[1:v]trim=$T1:$T2, setpts=$SCALE*(PTS-STARTPTS), colorkey=0x70de77:1.0:0.2[blk];
 		 [blk][v0-a]overlay=x=main_w-overlay_w:y=main_h-overlay_h:enable='between(t,0,179)'[v0-1]; \
 		 [v0][v0-1]overlay=x=main_w-overlay_w:y=main_h-overlay_h, rotate=2*PI*t/$T[v0-over]; \
