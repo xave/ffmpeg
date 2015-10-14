@@ -5,7 +5,9 @@
 
 
 ## DECLARE VARS
-TEST="/Users/xavier/Downloads/mov/A.Beautiful.Mind.2001.1080p/A.Beautiful.Mind.2001.1080p.BluRay.x264.GSFTX.mp4"
+echo "Insert the path to your movie file:"
+read TEST
+echo "The path is $TEST"
 T1=1263 # 00:21:03
 T2=1270  
 T3=1278 
